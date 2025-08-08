@@ -55,9 +55,22 @@ class MQTTProvider:
         async with aiofiles.open(cert_file_path, "w") as f:
             await f.write(resp_json["data"]["certificatePem"])
 
-        topic = resp_json["data"]["topic"]
+        topic = None
+        topics = []
+        try:
+            topic = resp_json["data"]["topic"]
+        except KeyError:
+            pass
+
+        try:
+            topics = resp_json["data"]["topics"]
+        except KeyError:
+            pass
+
         self.mqtt_client = mqtt.Client(client_id="TODO", protocol=mqtt.MQTTv5)
-        self.mqtt_client.user_data_set({"topic": topic, "listeners": self.listeners})
+        self.mqtt_client.user_data_set(
+            {"topics": list(dict.fromkeys(topics, topic)), "listeners": self.listeners}
+        )
 
         if sslContext:
             await asyncio_loop.run_in_executor(
@@ -101,7 +114,8 @@ class MQTTProvider:
 
     def _on_connect(self, client, userdata, flags, rc, properties=None):
         if rc == 0:
-            client.subscribe(userdata["topic"], qos=1)
+            for topic in userdata["topics"]:
+                client.subscribe(topic, qos=1)
         else:
             raise ConnectionError("Failed to connect")
 
