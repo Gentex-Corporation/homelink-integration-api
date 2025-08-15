@@ -39,9 +39,7 @@ jobs:
       - name: Build package
         run: python -m build . --wheel --sdist -o dist
       - name: Verify upload package
-        run: |
-          pip install dist/*.whl
-          twine check dist/*
+        run: twine check dist/*
       - name: Publish
         env:
           TWINE_USERNAME: __token__
