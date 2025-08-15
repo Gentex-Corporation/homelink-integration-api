@@ -34,12 +34,10 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v4
-      - name: Install build tools
-        run: pip install --upgrade build setuptools wheel
+      - name: Install tools
+        run: pip install --upgrade build setuptools wheel twine
       - name: Build package
         run: python -m build --wheel --sdist -o dist
-      - name: Install Twine
-        run: pip install twine
       - name: Verify upload package
         run: |
           pip install dist/*.whl
