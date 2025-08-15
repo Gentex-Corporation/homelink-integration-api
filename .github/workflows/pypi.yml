@@ -36,7 +36,7 @@ jobs:
       - name: Install build tool
         run: pip install build
       - name: Build package
-        run: python -m build --wheel -sdist -o dist
+        run: python -m build --wheel --sdist -o dist
       - name: Install Twine
         run: pip install twine
       - name: Publish
