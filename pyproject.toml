@@ -8,7 +8,6 @@ authors = [
 ]
 description = "API to interact with Homelink cloud for Home Assistant"
 readme = "README.md"
-license = { file = "LICENSE" }
 requires-python = ">=3.12"
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -28,5 +27,5 @@ Homepage = "https://www.homelink.com/"
 Issues = "https://www.homelink.com/support"
 
 [build-system]
-requires = ["setuptools>=61.0", "wheel"]
+requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
