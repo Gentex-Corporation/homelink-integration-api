@@ -36,5 +36,6 @@ jobs:
           externalFeeds: pypi_upload
       - script: |
           ls '$(System.ArtifactsDirectory)/Linux'
-          python -m twine upload --disable-progress-bar -r pypi --config-file $(PYPIRC_PATH) --verbose $(System.ArtifactsDirectory)/Linux/*
+          echo $(PYPIRC_PATH)
+          cat $(PYPIRC_PATH)
         displayName: Upload packages
