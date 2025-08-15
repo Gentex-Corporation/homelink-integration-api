@@ -42,7 +42,7 @@ jobs:
         run: python -m build . --wheel --sdist -o dist -v
       - name: Verify upload package
         run: |
-          twine check dist/* --verbose
+          twine check dist/*
       - name: Publish
         env:
           TWINE_USERNAME: __token__
