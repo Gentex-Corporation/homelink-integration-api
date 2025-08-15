@@ -35,13 +35,12 @@ jobs:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v4
       - name: Install tools
-        run: |
-          pip install --upgrade build setuptools wheel twine packaging
-          pip show setuptools wheel build twine packaging || true
+        run: pip install --upgrade build setuptools wheel twine packaging
       - name: Build package
-        run: python -m build . --wheel --sdist -o dist -v
+        run: python -m build . --wheel --sdist -o dist
       - name: Verify upload package
         run: |
+          pip install dist/*.whl
           twine check dist/*
       - name: Publish
         env:
