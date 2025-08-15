@@ -24,6 +24,7 @@ jobs:
 
   pypi-release:
     name: Publish to Pypi
+    needs: github-release
     runs-on: ubuntu-latest
     environment:
       name: pypi
