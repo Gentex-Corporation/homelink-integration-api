@@ -40,6 +40,10 @@ jobs:
         run: python -m build --wheel --sdist -o dist
       - name: Install Twine
         run: pip install twine
+      - name: Verify upload package
+        run: |
+          pip install dist/*.whl
+          twine check dist/*
       - name: Publish
         env:
           TWINE_USERNAME: __token__
