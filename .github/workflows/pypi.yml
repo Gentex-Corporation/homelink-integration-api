@@ -54,5 +54,5 @@ jobs:
         with:
           name: release-dists
           path: dist/
-    #   - name: Publish
-    #     uses: pypa/gh-action-pypi-publish@release/v1
+      - name: Publish
+        uses: pypa/gh-action-pypi-publish@release/v1
