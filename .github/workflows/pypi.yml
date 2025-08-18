@@ -1,0 +1,58 @@
+name: Release Python Package
+
+on:
+  push:
+    tags:
+    - "v*.*.*"
+
+permissions:
+  contents: read
+
+jobs:
+  github-release:
+    name: Create GitHub release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+
+  build-release:
+    name: Build release package
+    needs: github-release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
+      - name: Install tools
+        run: pip install --upgrade build setuptools wheel
+      - name: Build package
+        run: python -m build . --wheel --sdist -o dist
+      - name: Upload dists
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-dists
+          path: dist/
+
+  pypi-release:
+    name: Publish to Pypi
+    needs: build-release
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/homelink-home-assistant
+    permissions:
+      id-token: write
+    steps:
+      - name: Retrieve release distribution
+        uses: actions/download-artifact@v4
+        with:
+          name: release-dists
+          path: dist/
+      - name: Publish
+        uses: pypa/gh-action-pypi-publish@release/v1
