@@ -22,9 +22,26 @@ jobs:
         with:
           generate_release_notes: true
 
+  build-release:
+    name: Build release package
+    needs: github-release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
+      - name: Install tools
+        run: pip install --upgrade build setuptools wheel
+      - name: Build package
+        run: python -m build . --wheel --sdist -o dist
+      - name: Upload dists
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-dists
+          path: dist/
+
   pypi-release:
     name: Publish to Pypi
-    needs: github-release
+    needs: build-release
     runs-on: ubuntu-latest
     environment:
       name: pypi
@@ -32,16 +49,10 @@ jobs:
     permissions:
       id-token: write
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-python@v4
-      - name: Install tools
-        run: pip install --upgrade build setuptools wheel twine packaging
-      - name: Build package
-        run: python -m build . --wheel --sdist -o dist
-      - name: Verify upload package
-        run: twine check dist/*
-      - name: Publish
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-        run: python -m twine upload --disable-progress-bar -r pypi dist/*
+      - name: Retrieve release distribution
+        uses: actions/download-artifact@v4
+        with:
+          name: release-dists
+          path: dist/
+    #   - name: Publish
+    #     uses: pypa/gh-action-pypi-publish@release/v1
