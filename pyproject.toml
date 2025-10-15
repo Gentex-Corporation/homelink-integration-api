@@ -6,7 +6,7 @@ authors = [
   { name="Ryan Jones", email="ryan.jones@gentex.com" },
   { name="Evgeniy Burbyga", email="evbuxa@syntronic.com" },
 ]
-description = "API to interact with Homelink cloud for Home Assistant"
+description = "API to interact with Homelink cloud for MQTT-enabled smart home platforms"
 readme = "README.md"
 requires-python = ">=3.12"
 classifiers = [
