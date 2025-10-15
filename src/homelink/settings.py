@@ -1,17 +1,17 @@
 from decouple import config
 
-# TODO: Defaults should be production
 HOST_URL = config("HOMELINK_HOST_URL", default="homelinkcloud.com")
+PLATFORM = config("HOMELINK_SMART_HOME_PLATFORM", default="home-assistant")
 DISCOVER_URL = config(
     "HOMELINK_DISCOVER_URL",
-    default=f"https://{HOST_URL}/services/v2/home-assistant/fulfillment",
+    default=f"https://{HOST_URL}/services/v2/{PLATFORM}/fulfillment",
 )
 ENABLE_URL = config(
     "HOMELINK_ENABLE_URL",
-    default=f"https://{HOST_URL}/services/v2/home-assistant/fulfillment",
+    default=f"https://{HOST_URL}/services/v2/{PLATFORM}/fulfillment",
 )
 STATE_URL = config(
-    "HOMELINK_STATE_URL", default=f"https://state.{HOST_URL}/services/v2/home-assistant"
+    "HOMELINK_STATE_URL", default=f"https://state.{HOST_URL}/services/v2/{PLATFORM}"
 )
 
 COGNITO_POOL_ID = config("COGNITO_POOL_ID", default="us-east-2_sBYr2OD1J")
