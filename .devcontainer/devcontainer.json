@@ -1,5 +1,5 @@
 {
-	"name": "homelink-homeassistant-api",
+	"name": "homelink-integration-api",
 	"build": {
 		"dockerfile": "Dockerfile",
 		"args": {

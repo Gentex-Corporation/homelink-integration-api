@@ -1,12 +1,12 @@
 [project]
-name = "homelink-home-assistant"
-version = "0.0.8"
+name = "homelink-integration-api"
+version = "0.0.1"
 authors = [
   { name="Nicholas Aelick", email="niaexa@syntronic.com" },
   { name="Ryan Jones", email="ryan.jones@gentex.com" },
   { name="Evgeniy Burbyga", email="evbuxa@syntronic.com" },
 ]
-description = "API to interact with Homelink cloud for Home Assistant"
+description = "API to interact with Homelink cloud for MQTT-enabled smart home platforms"
 readme = "README.md"
 requires-python = ">=3.12"
 classifiers = [
