@@ -4,7 +4,6 @@ from homelink.mqtt_provider import MQTTProvider
 import asyncio
 from aiohttp import ClientSession
 
-
 USERNAME = ""
 PASSWORD = ""
 

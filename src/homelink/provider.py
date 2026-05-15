@@ -4,7 +4,7 @@ import logging
 from homelink.auth.abstract_auth import AbstractAuth
 from homelink.model.button import Button
 from homelink.model.device import Device
-from homelink.settings import DISCOVER_URL, STATE_URL, ENABLE_URL
+from homelink.settings import DISCOVER_URL, ENABLE_URL
 
 
 class Provider:
@@ -36,17 +36,3 @@ class Provider:
             json={"command": "ENABLE"},
         )
         return await enable_resp.json()
-
-    async def get_state(self):
-        resp = await self.authorized_session.request("GET", STATE_URL)
-        resp_data = await resp.json()
-        if "data" not in resp_data or resp_data["data"] is None:
-            return None, {}
-
-        if "requestSync" in resp_data["data"]:
-            should_sync = resp_data["data"]["requestSync"]
-        else:
-            should_sync = None
-        return should_sync, (
-            resp_data["data"]["state"] if "state" in resp_data["data"] else {}
-        )
