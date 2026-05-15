@@ -62,6 +62,7 @@
 	"postCreateCommand": "sudo chown -R vscode:vscode /commandhistory",
 	"updateRemoteUserUID": true,
 	"mounts": [
+		"source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached",
 		"source=zshhistory,target=/commandhistory,type=volume"
 	],
 	"features": {
