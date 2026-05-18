@@ -1,6 +1,6 @@
 [project]
 name = "homelink-integration-api"
-version = "0.0.1"
+version = "0.0.2"
 authors = [
   { name="Nicholas Aelick", email="niaexa@syntronic.com" },
   { name="Ryan Jones", email="ryan.jones@gentex.com" },
