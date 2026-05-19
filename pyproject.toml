@@ -25,6 +25,7 @@ asyncio_default_fixture_loop_scope = "function"
 [project.urls]
 Homepage = "https://www.homelink.com/"
 Issues = "https://www.homelink.com/support"
+Repository = "https://github.com/Gentex-Corporation/homelink-integration-api"
 
 [build-system]
 requires = ["setuptools>=61.0"]
