@@ -1,8 +1,9 @@
 import logging
+import uuid
 
 from homelink.model.button import Button
 from homelink.model.device import Device
-from homelink.settings import COGNITO_CLIENT_ID, DISCOVER_URL, ENABLE_URL, MQTT_IOT_ENDPOINT, MQTT_IOT_PORT
+from homelink.settings import DISCOVER_URL, ENABLE_URL, MQTT_IOT_ENDPOINT, MQTT_IOT_PORT
 
 import paho.mqtt.client as mqtt
 import homelink.mqtt_util as mqtt_util
@@ -66,8 +67,8 @@ class MQTTProvider:
             topics = resp_json["data"]["topics"]
         except KeyError:
             pass
-
-        self.mqtt_client = mqtt.Client(client_id=COGNITO_CLIENT_ID, protocol=mqtt.MQTTv5)
+        client_id = f"{topic}-{str(uuid.uuid4())}" # unique per instance, per connection
+        self.mqtt_client = mqtt.Client(client_id=client_id, protocol=mqtt.MQTTv5)
         self.mqtt_client.user_data_set(
             {"topics": list(dict.fromkeys(topics, topic)), "listeners": self.listeners}
         )
