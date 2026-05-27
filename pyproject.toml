@@ -2,9 +2,7 @@
 name = "homelink-integration-api"
 version = "0.0.4"
 authors = [
-  { name="Nicholas Aelick", email="niaexa@syntronic.com" },
-  { name="Ryan Jones", email="ryan.jones@gentex.com" },
-  { name="Evgeniy Burbyga", email="evbuxa@syntronic.com" },
+  { name="Gentex Cloud Services", email="cloudservices@gentex.com" },
 ]
 description = "API to interact with Homelink cloud for MQTT-enabled smart home platforms"
 readme = "README.md"
