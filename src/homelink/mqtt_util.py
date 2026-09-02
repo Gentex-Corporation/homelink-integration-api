@@ -1,4 +1,7 @@
-from OpenSSL import crypto
+from cryptography import x509
+from cryptography.hazmat.primitives import hashes, serialization
+from cryptography.hazmat.primitives.asymmetric import rsa
+from cryptography.x509.oid import NameOID
 import re
 from homelink.settings import (
     MQTT_ROOT_CA,
@@ -28,18 +31,19 @@ async def generate_csr():
         cert_data = await response.text()
         if response.status != 200 or "error" in cert_data:
             raise Exception("Failed to get root certificate")
-    key = crypto.PKey()
-    key.generate_key(crypto.TYPE_RSA, MQTT_PRIVATE_KEY_SIZE)
-    key_pem = crypto.dump_privatekey(crypto.FILETYPE_PEM, key).decode("utf-8")
-    bytes_private_key = key_pem.encode("utf-8")
-
-    csr = crypto.X509Req()
-    csr.get_subject().CN = "gentex"
-    csr.set_pubkey(key)
-    csr.sign(key, "sha512")
-
-    csr_pem = crypto.dump_certificate_request(crypto.FILETYPE_PEM, csr).decode(
-        encoding="utf-8"
+    key = rsa.generate_private_key(public_exponent=65537, key_size=MQTT_PRIVATE_KEY_SIZE)
+    bytes_private_key = key.private_bytes(
+        serialization.Encoding.PEM,
+        serialization.PrivateFormat.PKCS8,
+        serialization.NoEncryption(),
     )
+
+    csr = (
+        x509.CertificateSigningRequestBuilder()
+        .subject_name(x509.Name([x509.NameAttribute(NameOID.COMMON_NAME, "gentex")]))
+        .sign(key, hashes.SHA512())
+    )
+
+    csr_pem = csr.public_bytes(serialization.Encoding.PEM).decode(encoding="utf-8")
 
     return bytes_private_key, format_csr(csr_pem)
