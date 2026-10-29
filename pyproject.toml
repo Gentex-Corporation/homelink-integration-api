@@ -12,7 +12,14 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
-dependencies = ["python-decouple>=3.8", "boto3"]
+dependencies = [
+    "python-decouple>=3.8",
+    "boto3",
+    "aiofiles",
+    "aiohttp",
+    "cryptography",
+    "paho-mqtt",
+]
 
 [tool.pytest.ini_options]
 pythonpath = [
